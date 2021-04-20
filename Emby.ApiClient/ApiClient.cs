@@ -178,7 +178,7 @@ namespace Emby.ApiClient
             }
             catch
             {
-                // Unable to re-establish connection with the server. 
+                // Unable to re-establish connection with the server.
                 // Throw the original exception
                 throw timeoutException;
             }
@@ -426,6 +426,24 @@ namespace Emby.ApiClient
             {
                 return DeserializeFromStream<ItemCounts>(stream);
             }
+        }
+
+        /// <summary>
+        /// Delete the item async.
+        /// </summary>
+        /// <param name="itemId">itemId to delete</param>
+        /// <returns>Task{ItemCounts}.</returns>
+        public Task DeleteItemAsync(string itemId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+
+            var url = GetApiUrl("Items/" + itemId);
+
+            return SendAsync(new HttpRequest
+            {
+                Url = url,
+                RequestHeaders = HttpHeaders,
+                Method = "DELETE"
+            });
         }
 
         /// <summary>
@@ -2871,7 +2889,7 @@ namespace Emby.ApiClient
                     dict.Add("ItemIds", list);
                 }
             }
-            
+
             var url = GetApiUrl("Sync/Options", dict);
 
             using (var stream = await GetSerializedStreamAsync(url).ConfigureAwait(false))

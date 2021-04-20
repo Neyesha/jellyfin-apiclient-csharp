@@ -287,6 +287,12 @@ namespace Emby.ApiClient.Model
         Task<ItemCounts> GetItemCountsAsync(ItemCountsQuery query);
 
         /// <summary>
+        /// Deletes an item from the library and file system
+        /// </summary>
+        /// <param name="itemId">The item identifier.</param>
+        Task DeleteItemAsync(string itemId, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Gets the episodes asynchronous.
         /// </summary>
         /// <param name="query">The query.</param>
